@@ -1,0 +1,28 @@
+{
+  "name": "book-directory-api",
+  "version": "1.0.0",
+  "description": "an api for a fictional library",
+  "main": "index.js",
+  "scripts": {
+    "start": "supervisor app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahnaafarafee/book-directory-api.git"
+  },
+  "author": "Ahnaaf Al Rafee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahnaafarafee/book-directory-api/issues"
+  },
+  "homepage": "https://github.com/ahnaafarafee/book-directory-api#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "supervisor": "^0.12.0"
+  }
+}
