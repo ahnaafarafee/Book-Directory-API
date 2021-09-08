@@ -3,10 +3,11 @@ const express = require("express");
 require("dotenv").config();
 
 const app = express();
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("This is the HOME!");
-});
+const bookRoutes = require("./routes/bookRoutes");
+
+app.use("/", bookRoutes);
 
 mongoose
   .connect(process.env.DATABASE, {
