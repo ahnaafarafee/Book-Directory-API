@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const randomIsbnGen = require("../utils/randomIsbnGen");
 
 const BookSchema = mongoose.Schema({
   title: {
@@ -18,6 +19,10 @@ const BookSchema = mongoose.Schema({
     required: true,
   },
   isPublished: Boolean,
+  ISBN: {
+    type: String,
+    default: randomIsbnGen(),
+  },
   date: {
     type: Date,
     default: Date.now(),

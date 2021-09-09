@@ -1,5 +1,6 @@
 const express = require("express");
 const Book = require("../models/Book");
+const randomIsbnGen = require("../utils/randomIsbnGen");
 
 const router = express.Router();
 
@@ -11,6 +12,14 @@ router.get("/", async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 });
+
+// router.get("/isbn", async (req, res) => {
+//   try {
+//     randomIsbnGen();
+//   } catch (error) {
+//     res.status(404).json({ message: error.message });
+//   }
+// });
 
 router.get("/:id", async (req, res) => {
   try {
