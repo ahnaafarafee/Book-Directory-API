@@ -31,12 +31,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const book = new Book({
-    title: req.body.title,
-    description: req.body.description,
-    author: req.body.author,
-    genre: req.body.genre,
-  });
+  const book = new Book(req.body);
 
   try {
     const savedBook = await book.save();
@@ -48,7 +43,10 @@ router.post("/", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
   try {
-    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body);
+    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     res.status(200).json(updatedBook);
   } catch (error) {
     res.status(404).json({ message: error.message });
