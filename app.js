@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 
 const bookRoutes = require("./routes/bookRoutes");
+const Book = require("./models/Book");
 
 app.use("/", bookRoutes);
 

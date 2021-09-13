@@ -23,6 +23,13 @@ const BookSchema = mongoose.Schema({
     min: [1, "rating must be above 1"],
     max: [5, "rating must be below 5"],
   },
+  status: {
+    type: String,
+    enum: {
+      values: ["published", "unpublished"],
+      message: "Status is either published or unpublished",
+    },
+  },
   isPublished: Boolean,
   ISBN: {
     type: String,
