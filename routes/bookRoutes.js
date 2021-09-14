@@ -13,14 +13,14 @@ router.get("/", async (req, res) => {
   // implementing gte, lte etc filtering
   // localhost:5000/?rating[gte]=4
   // but we get {gte: 4} -> we need {$gte: 4}
-  // so we have to replace that with this
+  // so we have to replace that with $
   // i hope this is understandable 😶
   let queryStr = JSON.stringify(queryObj);
   queryStr = queryStr.replace(/\b(gte|lte|gt|lt)\b/g, (match) => `$${match}`); // simple js, nothing to do with node
 
   let query = Book.find(JSON.parse(queryStr));
 
-  // sorting
+  // sorting ✅
   // as we din't awaited the let query we can chain many methods to it
   if (req.query.sort) {
     // if the query parameter has a sort property in it then implement the sort functionality
@@ -31,9 +31,19 @@ router.get("/", async (req, res) => {
     // console.log(sortBy);
 
     query = query.sort(sortBy);
-  }else {
+  } else {
     // default sorting
-    query = query.sort("-date")
+    query = query.sort("-date");
+  }
+
+  // field limiting ✅
+  if (req.query.fields) {
+    // we will receive multiple fields, so we also replace the comma(,) with a space( ) here
+    const fields = req.query.fields.split(",").join(" ");
+    query = query.select(fields);
+  } else {
+    // if the user doesn't specify any fields than we will remove the __v field
+    query = query.select("-__v"); // - is to exclude the field
   }
 
   const books = await query;
