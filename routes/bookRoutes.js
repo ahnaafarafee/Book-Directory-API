@@ -18,7 +18,24 @@ router.get("/", async (req, res) => {
   let queryStr = JSON.stringify(queryObj);
   queryStr = queryStr.replace(/\b(gte|lte|gt|lt)\b/g, (match) => `$${match}`); // simple js, nothing to do with node
 
-  const query = Book.find(JSON.parse(queryStr));
+  let query = Book.find(JSON.parse(queryStr));
+
+  // sorting
+  // as we din't awaited the let query we can chain many methods to it
+  if (req.query.sort) {
+    // if the query parameter has a sort property in it then implement the sort functionality
+
+    // we can have multiple query parameters -> localhost:5000/?sort=-rating,date
+    // we need to replace the comma(,) with a space( )
+    const sortBy = req.query.sort.split(",").join(" ");
+    // console.log(sortBy);
+
+    query = query.sort(sortBy);
+  }else {
+    // default sorting
+    query = query.sort("-date")
+  }
+
   const books = await query;
 
   try {
