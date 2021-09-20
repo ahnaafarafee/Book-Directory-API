@@ -6,6 +6,7 @@ const {
   updatedBook,
   deleteBook,
   publishedBooks,
+  getBookStats,
 } = require("../controllers/bookController");
 
 const router = express.Router();
@@ -13,6 +14,7 @@ const router = express.Router();
 // always define this kind of routes on top of all routes
 // https://stackoverflow.com/a/54552580
 router.route("/published").get(publishedBooks);
+router.route("/book-stats").get(getBookStats);
 
 router.route("/").get(getAllBooks).post(createBook);
 

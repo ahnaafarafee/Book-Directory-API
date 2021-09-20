@@ -135,3 +135,30 @@ exports.publishedBooks = async (req, res) => {
     res.status(404).json({ message: error });
   }
 };
+
+exports.getBookStats = async (req, res) => {
+  try {
+    const stats = await Book.aggregate([
+      {
+        $match: {},
+      },
+      {
+        $group: {
+          _id: { $toUpper: "$genre" },
+          numBooks: { $sum: 1 },
+          maxRating: { $max: "$rating" },
+          minRating: { $min: "$rating" },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      result: stats.length, // total number of result
+      data: {
+        stats,
+      },
+    });
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+};
